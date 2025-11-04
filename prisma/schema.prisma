@@ -1,0 +1,62 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+/// Types of entries: Movie or TV Show
+enum MovieType {
+  MOVIE
+  TV_SHOW
+  OTHER
+}
+
+/// Optional roles for future auth
+enum UserRole {
+  ADMIN
+  USER
+}
+
+/// Core model for movies / tv shows
+model Movie {
+  id         Int       @id @default(autoincrement())
+  title      String
+  type       MovieType
+  director   String
+  budget     String?      // Use String for freeform budgets like "$160M" or "$3M/ep"
+  location   String?
+  duration   String?      // e.g. "148 min", "49 min/ep"
+  yearTime   String?      // flexible: e.g. "2010" or "2008-2013"
+  description String?     // extra details, synopsis
+  posterUrl  String?      // optional URL to poster/image
+
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  /// If you add user ownership later, uncomment and use relation:
+  /// ownerId Int?
+  /// owner   User? @relation(fields: [ownerId], references: [id])
+
+  @@index([type])
+  @@index([director])
+}
+
+/// Optional User model for authentication (bonus)
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole @default(USER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  /// movies  Movie[] // enable if adding a relation from Movie -> User
+}
