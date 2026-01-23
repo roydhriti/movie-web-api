@@ -29,6 +29,9 @@ jobs:
     - name: "Installing Dependencies"
       run: npm i
 
+    - name: "Prisma Generate"
+      run: npx prisma generate
+
     - name: "Build Command"
       run: npm run build
     # - run: npm ci
@@ -52,6 +55,9 @@ jobs:
 
     - name: "Installing Dependencies"
       run: npm i
+
+    - name: "Prisma Generate"
+      run: npx prisma generate
 
     - name: "Running test"
       run: npm run test
