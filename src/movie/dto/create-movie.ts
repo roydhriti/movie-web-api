@@ -1,6 +1,6 @@
 import { IsEnum, IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { MovieType } from 'generated/prisma/enums';
-// import { MovieType } from '@prisma/client';
+// import { MovieType } from 'generated/prisma/enums';
+import { MovieType } from '@prisma/client';
 
 export class CreateMovieDto {
   @IsNotEmpty()
